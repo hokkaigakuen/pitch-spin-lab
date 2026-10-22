@@ -22,7 +22,7 @@ h1{font-size:clamp(22px,4vw,30px);margin:0;letter-spacing:.04em}.accent{color:va
 <main>
 <header class="top"><div><h1>PITCH SPIN LAB <span class="accent">3D</span></h1><div class="muted">硬式球モデル・回転軸シミュレーター</div></div><div class="muted">4方向の固定視点で確認</div></header>
 <div class="stage" id="stage"><div id="canvasHost" style="width:100%;height:100%"></div><div class="hud" id="hud">3Dモデルを読み込み中…</div><div class="movement" aria-label="ボールの変化方向"><span class="dir up" id="moveUp">↑</span><span class="dir left" id="moveLeft">←</span><span class="center">変化</span><span class="dir right" id="moveRight">→</span><span class="dir down" id="moveDown">↓</span></div><div class="movement-label" id="moveLabel">変化方向（モデル推定）</div></div>
-<div class="panel" style="margin:-2px 0 12px;padding:10px 12px"><div class="muted" style="margin-bottom:8px">視点を選択</div><div class="buttons" id="viewButtons"><button data-view="pitcher">ピッチャー方向</button><button data-view="catcher" class="on">捕手方向</button><button data-view="first">一塁側方向</button><button data-view="third">三塁側方向</button></div></div>
+<div class="panel" style="margin:-2px 0 12px;padding:10px 12px"><div class="muted" style="margin-bottom:8px">視点を選択</div><div class="buttons" id="viewButtons"><button data-view="pitcher">投手目線</button><button data-view="catcher" class="on">捕手目線</button><button data-view="first">一塁側目線</button><button data-view="third">三塁側目線</button></div></div>
 <p class="muted" style="margin:-2px 0 12px;line-height:1.55"><strong style="color:#e8f3ff">注意：</strong>回転効率が100%のときに100%に見える位置、回転効率が0%のときに軸が点に見える位置へ移動する必要がある。</p>
 <div class="stats">
  <div class="stat"><div class="muted">回転効率</div><div class="value" id="statEff">100%</div></div>
@@ -102,7 +102,7 @@ document.querySelectorAll('#clocks [data-h]').forEach(b=>b.classList.toggle('on'
 document.querySelectorAll('#clocks [data-h]').forEach(b=>b.addEventListener('click',()=>{clock=+b.dataset.h;update()}));
 $('play').addEventListener('click',()=>{playing=!playing;$('play').textContent=playing?'⏸ 一時停止':'▶ 再生';$('play').classList.toggle('on',playing)});
 $('reset').addEventListener('click',()=>{phase=0;spin.rotation.set(0,0,0)});
-const views={pitcher:{az:0,el:0,label:'ピッチャー方向'},catcher:{az:Math.PI,el:0,label:'捕手方向'},first:{az:Math.PI/2,el:0,label:'一塁側方向'},third:{az:-Math.PI/2,el:0,label:'三塁側方向'}};
+const views={pitcher:{az:0,el:0,label:'投手目線'},catcher:{az:Math.PI,el:0,label:'捕手目線'},first:{az:-Math.PI/2,el:0,label:'一塁側目線'},third:{az:Math.PI/2,el:0,label:'三塁側目線'}};
 function chooseView(name){const v=views[name];if(!v)return;az=v.az;el=v.el;setCamera();document.querySelectorAll('#viewButtons [data-view]').forEach(b=>b.classList.toggle('on',b.dataset.view===name));}
 document.querySelectorAll('#viewButtons [data-view]').forEach(b=>b.addEventListener('click',()=>chooseView(b.dataset.view)));
 $('viewReset').addEventListener('click',()=>chooseView('catcher'));
